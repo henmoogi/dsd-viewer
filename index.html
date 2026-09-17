@@ -213,7 +213,11 @@ mark.hit.cur{background:#ff9d3c; box-shadow:0 0 0 2px #ff9d3c}
       <div style="margin:8px 0 2px; font-weight:700">여기로 파일을 끌어놓거나</div>
       <button class="btn" id="btnPick">파일 선택</button>
       <button class="btn ghost" id="btnSample">샘플 문서 보기</button>
-      <input type="file" id="fileInput" accept=".dsd,.xml,.htm,.html" class="hidden">
+      <!-- accept 를 두지 않는다. iOS(아이폰·아이패드)는 accept 의 확장자를 애플의 파일 타입(UTI)
+           으로 해석하는데 .dsd 는 등록된 타입이 아니어서, accept 가 있으면 파일 앱에서 .dsd 가
+           회색으로 비활성화돼 아예 선택할 수 없다. 파일 종류는 openBytesU8 이 ZIP 서명(PK)과
+           확장자로 직접 판별하므로 accept 없이도 안전하다. -->
+      <input type="file" id="fileInput" class="hidden">
       <div class="hint">지원: .dsd (DART 원본) · contents.xml · DART 내보내기 .htm</div>
     </div>
     <div class="err" id="landErr"></div>
