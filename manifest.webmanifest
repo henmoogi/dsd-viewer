@@ -1,0 +1,17 @@
+{
+  "name": "DSD 뷰어 — 공시서류 열람기",
+  "short_name": "DSD 뷰어",
+  "description": "DART 편집기 문서(.dsd)를 브라우저에서 바로 여는 뷰어. 파일은 기기 밖으로 전송되지 않습니다.",
+  "lang": "ko",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#ffffff",
+  "theme_color": "#1f6feb",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
