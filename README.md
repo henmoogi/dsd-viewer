@@ -3,6 +3,8 @@
 금융감독원 **DART 편집기 문서(`.dsd`)** 를 스마트폰이나 PC 브라우저에서 바로 열어 보는 뷰어입니다.
 설치할 것도, 가입할 것도 없습니다.
 
+> 📝 소개 글: [네이버 블로그 — 휴대폰으로 DART 공시파일(.dsd) 바로 열기](https://blog.naver.com/henmoogi/224431329312) · 문의·후기는 블로그 댓글로
+
 ## 👉 바로 쓰기
 
 **https://henmoogi.github.io/dsd-viewer/**
