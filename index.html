@@ -284,7 +284,7 @@ mark.hit.cur{background:#ff9d3c; box-shadow:0 0 0 2px #ff9d3c}
     <button class="btn" style="padding:9px 16px; font-size:14px" id="btnOpenNew">파일 선택</button>
   </div>
   <div style="text-align:center; font-size:11px; color:var(--muted); padding:6px 0 2px">
-    DSD 뷰어 · 빌드 <b>r8</b> · 2026-07-14
+    DSD 뷰어 · 빌드 <b>r9</b> · 2026-10-04
   </div>
 </div>
 
@@ -390,19 +390,19 @@ function buildSimple(tableEl, colCount){
   // 헤더: THEAD 활용
   const thead=tableEl.querySelector('THEAD');
   const tr=document.createElement('tr');
-  let periodLabels=[];
+  let periodLabels=[], labDone=false;
   if(thead){
     const ths=[...thead.querySelectorAll('TH')];
     if(ths.length){
       // 첫 TH=과목, COLSPAN>=2 인 TH들=기간
-      const labTh=document.createElement('th'); labTh.innerHTML=inlineHTML(ths[0]); tr.appendChild(labTh);
+      const labTh=document.createElement('th'); labTh.innerHTML=inlineHTML(ths[0]); tr.appendChild(labTh); labDone=true;
       const grp=ths.slice(1).filter(x=>(+(x.getAttribute('COLSPAN')||1))>=2);
       if(grp.length===pairs){ periodLabels=grp.map(x=>inlineHTML(x)); }
     }
   }
   if(!periodLabels.length){
     // 폴백 라벨
-    const labTh=document.createElement('th'); labTh.textContent='과목'; tr.appendChild(labTh);
+    if(!labDone){ const labTh=document.createElement('th'); labTh.textContent='과목'; tr.appendChild(labTh); }
     for(let p=0;p<pairs;p++) periodLabels.push(p===0?'당기':(p===1?'전기':'제'+(p+1)+'기'));
   }
   periodLabels.forEach(lbl=>{ const th=document.createElement('th'); th.className='num'; th.innerHTML=lbl; tr.appendChild(th); });
@@ -410,6 +410,12 @@ function buildSimple(tableEl, colCount){
   // 본문
   const tb=document.createElement('tbody');
   const bodyTrs=[...tableEl.querySelectorAll('TBODY>TR')];
+  bodyTrs.forEach(row=>{
+    const cs=[...row.children].filter(c=>/^(TE|TD|TH|TU)$/i.test(c.tagName));
+    if(cs.length===1) return;
+    if(cs.length!==colCount) throw new Error('simple: 열 수 불일치');
+    for(let p=0;p<pairs;p++){ const a=cs[1+p*2], b=cs[2+p*2]; if(a&&b&&nonblank(a)&&nonblank(b)) throw new Error('simple: 소분열 양쪽 값'); }
+  });
   bodyTrs.forEach(row=>{
     const cells=[...row.children].filter(c=>/^(TE|TD|TH|TU)$/i.test(c.tagName));
     if(!cells.length) return;
@@ -481,7 +487,7 @@ function renderTable(el){
   // 재무표 간략본
   const cls=el.getAttribute('ACLASS')||'';
   try{
-    if(/FINANCE/i.test(cls) && colCount>=3 && (colCount-1)%2===0){
+    if(/FINANCE/i.test(cls) && colCount>=5 && (colCount-1)%2===0){
       const simple=buildSimple(el,colCount);
       wrap.appendChild(simple); wrap.classList.add('hasSimple');
     }
